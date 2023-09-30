@@ -1,4 +1,4 @@
-package com.project.r2system.security.Auth;
+package com.project.r2system.security.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
