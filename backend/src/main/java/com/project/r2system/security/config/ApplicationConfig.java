@@ -1,9 +1,6 @@
 package com.project.r2system.security.config;
 
-import com.project.r2system.api.commons.ArticleMapping;
-import com.project.r2system.api.commons.BudgetMapping;
-import com.project.r2system.api.commons.CategoryMapping;
-import com.project.r2system.api.commons.WorkpowerMapping;
+import com.project.r2system.api.commons.*;
 import com.project.r2system.security.jwt.JwtUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
@@ -34,4 +31,6 @@ public class ApplicationConfig {
     }
     @Bean
     public BudgetMapping budgetMapping(){return new BudgetMapping();}
+    @Bean
+    public BudgetFormMapping budgetFromMapping(){return new BudgetFormMapping();}
 }
