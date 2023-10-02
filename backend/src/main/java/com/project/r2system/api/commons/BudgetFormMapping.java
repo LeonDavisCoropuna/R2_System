@@ -5,8 +5,11 @@ import com.project.r2system.domain.budgetSystem.entities.Budget;
 import com.project.r2system.domain.budgetSystem.entities.BudgetForm;
 import com.project.r2system.domain.budgetSystem.payloads.BudgetFormResponse;
 import com.project.r2system.domain.budgetSystem.services.BudgetService;
+import com.project.r2system.security.jwt.JwtUtils;
+import com.project.r2system.security.services.UserDetailsImpl;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,6 +22,9 @@ public class BudgetFormMapping {
 
     @Autowired
     private BudgetService budgetService;
+
+//    @Autowired
+//    private UserDetailsImpl userDetails;
 
     public BudgetFormResponse mapBudgetFormToResponse(BudgetForm budgetFrom) {
 
@@ -36,8 +42,10 @@ public class BudgetFormMapping {
 
 
         BudgetForm budgetForm = modelMapper.map(budgetFormResponse, BudgetForm.class);
+//        budgetForm.setCreadoPor(userDetails.getUsername());
         Budget budget = new Budget();
         budget.setIdN(budgetForm.getIdN());
+
 
         try {
             Date fechaCreacionDate = sdf.parse(fechaCreacionFormatted);

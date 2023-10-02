@@ -14,7 +14,7 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BudgetResponse {
+public class    BudgetResponse {
     private String idN;
     private String estado;
     private String formaPago;
