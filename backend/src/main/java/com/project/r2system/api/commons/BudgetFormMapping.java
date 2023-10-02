@@ -1,22 +1,54 @@
 package com.project.r2system.api.commons;
 
 
+import com.project.r2system.domain.budgetSystem.entities.Budget;
 import com.project.r2system.domain.budgetSystem.entities.BudgetForm;
 import com.project.r2system.domain.budgetSystem.payloads.BudgetFormResponse;
+import com.project.r2system.domain.budgetSystem.services.BudgetService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 
 public class BudgetFormMapping {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private BudgetService budgetService;
+
     public BudgetFormResponse mapBudgetFormToResponse(BudgetForm budgetFrom) {
 
         return modelMapper.map(budgetFrom, BudgetFormResponse.class);
     }
+
     public BudgetForm createBudgetFormByResponse(BudgetFormResponse budgetFormResponse){
 
-        return modelMapper.map(budgetFormResponse, BudgetForm.class);
+        // Obtener la fecha actual en el horario de Perú
+        TimeZone timeZone = TimeZone.getTimeZone("America/Lima");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+        sdf.setTimeZone(timeZone);
+        Date fechaCreacion = new Date();  // Fecha y hora actual
+        String fechaCreacionFormatted = sdf.format(fechaCreacion);
+
+
+        BudgetForm budgetForm = modelMapper.map(budgetFormResponse, BudgetForm.class);
+        Budget budget = new Budget();
+        budget.setIdN(budgetForm.getIdN());
+
+        try {
+            Date fechaCreacionDate = sdf.parse(fechaCreacionFormatted);
+            budget.setFechaCreacion(fechaCreacionDate);
+        } catch (ParseException e) {
+            e.printStackTrace();  // Manejar la excepción según tu lógica
+        }
+
+
+        budgetService.createBudget(budget);
+        return budgetForm;
     }
     public void updateBudgetFormByResponse(BudgetFormResponse budgetFormResponse, BudgetForm budgetForm){
 
