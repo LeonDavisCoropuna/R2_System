@@ -13,7 +13,7 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "categories")
+@Document(collection = "category")
 public class Category  {
     @Id
     private String id;

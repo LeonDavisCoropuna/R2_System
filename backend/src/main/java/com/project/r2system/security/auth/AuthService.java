@@ -58,7 +58,7 @@ public class AuthService {
         User user = User.builder()
             .username(request.getUsername())
             .password(passwordEncoder.encode( request.getPassword()))
-            .build();
+            .build();   
 
         Set<String> strRoles = request.getRoles();
         Set<Role> roles = new HashSet<>();

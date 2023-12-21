@@ -24,17 +24,20 @@ import java.util.List;
 public class ArticleController {
     @Autowired
     private ArticleService articleService;
+    
+    @Autowired
+    private ArticleMapping articleMapping;
+    
     @Autowired
     private ModelMapper modelMapper;
     @Autowired
     private CategoryService categoryService;
     @Autowired
     private MeasureService measureService;
-    @Autowired
-    private ArticleMapping articleMapping;
 
+    @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping("/all")
-    public ResponseEntity<List<ArticleResponse>> getAllArticles()
+    public ResponseEntity<List<?>> getAllArticles()
     {
         List<Article> articles = articleService.allArticles();
         if (articles.isEmpty()) {
@@ -78,7 +81,6 @@ public class ArticleController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteTutorial(@PathVariable("id") Integer idN) {
         try {
@@ -88,5 +90,4 @@ public class ArticleController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }

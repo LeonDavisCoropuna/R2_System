@@ -17,7 +17,9 @@ public class ClientService{
 
     public List<Client> allClients()
     {
+        
         return clientRepository.findAll();
+        
     }
 
     public Client clientById(Integer idN)
